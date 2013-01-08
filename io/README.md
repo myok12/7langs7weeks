@@ -31,9 +31,10 @@ Number factorial := method(n := 1; for(i, 1, self, n = n * i); n)
 This is pretty awesome and I never considered doing it before. In `JavaScript` you can't actually create operators, but you can play with the the `Boolean` type. Because the implementation of xor doesn't exist in JS, lets implement it!
 
 > Implementation of `xor` on `Boolean`
+
 ```javascript
 Boolean.prototype.xor = function (bool) { 
-   var val = val;
+   var val = this.valueOf();
    if (bool === true && val === true) { return false; } 
    else if (bool === true && val === false) { return true; } 
    else if ( bool === false && val === true) { return true; } 
