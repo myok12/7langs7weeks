@@ -9,7 +9,7 @@ foo bar
 # Add more inheritance
 Bar := Foo clone
 Bar bar := method(
-    Foo bar # Parent clone
+    self proto bar # Parent call
     " from Bar" print
 )
 Bar bar
