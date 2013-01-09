@@ -60,5 +60,5 @@ writeln("Making a request to nyt")
 result := URL with("http://www.nytimes.com") @fetch
 
 writeln("This statement was not blocked by the future")
-writeln("NYTimes request is ", result size, " bytes")
+writeln("Request to ", result url, " is ", result size, " bytes")
 writeln("This statement was blocked by the future")
