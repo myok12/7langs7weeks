@@ -14,6 +14,10 @@ Builder forward := method(
 
     self incIndent
 
+    # Indent for textNode
+    oldIndentHelper := indentHelper
+    indentHelper = "    " repeated(self indent)
+
     call message arguments foreach(arg,
         content := self doMessage(arg)
         if(content type == "Sequence", 
@@ -22,6 +26,7 @@ Builder forward := method(
     )
 
     self decIndent
+    indentHelper = oldIndentHelper
     writeln(indentHelper, "</", msgName, ">")
 )
 
@@ -36,13 +41,11 @@ Builder ul(
 ###
 
 curlyBrackets := method(
-    call message arguments map(arg,
-        self doMessage(arg)
-    )
+    call message arguments map(arg, return self doMessage(arg))
 )
 
 writeln
-{ 1, 2, 3 ,4 } println
+{ 1, 2, 3 , list(1,2,3) } println
 
 ###
 # @3
@@ -50,23 +53,12 @@ writeln
 
 
 ######## Extra
-viz := Object clone
-viz talk := method(
-    "talk 1" println
-    yield
-    "talk 2" println
-    yield
-)
+# Futurez, yo
+#
 
-fiz := Object clone
-fiz talk := method(
-    yield
-    "rhyme 1" println
-    yield
-    "rhyme 2" println
-)
+writeln("Making a request to nyt")
+result := URL with("http://www.nytimes.com") @fetch
 
-viz @@talk
-fiz @@talk
-
-Coroutine currentCoroutine pause
+writeln("This statement was not blocked by the future")
+writeln("NYTimes request is ", result size, " bytes")
+writeln("This statement was blocked by the future")

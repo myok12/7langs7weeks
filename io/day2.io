@@ -9,7 +9,7 @@ fib := method(num,
         val := numbers at(i - 1) + numbers at(i - 2)
         numbers append(val)
     )
-    return numbers at(numbers size - 1)
+    numbers at(numbers size - 1)
 )
 
 "Fib with a loop\n---------" println
@@ -55,14 +55,8 @@ List deepAdd := method(
     flat := self flatten()
     sum := nil
 
-
     flat foreach(i, val,
-        if(val type == "Number",
-            sum = (
-                # Convert to 0 if nil 
-                val + if (sum, sum, 0)
-            )
-        )
+        if(val type == "Number", sum = val + if (sum, sum, 0))
     )
     return sum
 )
@@ -98,14 +92,17 @@ writeln
 
 DimList := List clone
 DimList dim := method(x, y,
+    # Make this method easier to work with by creating a proper cloned object
+    # upon usage otherwise size could be changed at any point
+    if(self proto type == List,
+        return DimList clone dim(x, y)
+    )
+    
     # Set the size of our list
     self setSize(x)
 
     for(i, 0, x - 1,
-        self atPut(
-            i, 
-            list() setSize(y)
-        )
+        self atPut( i, list() setSize(y))
     )
     # ULTRA COMBO!!!!
     return self
@@ -124,17 +121,11 @@ DimList get := method(x, y,
 ###
 # @7
 ###
-matrix := DimList clone
-matrix dim(3, 3)
-matrix set(0, 0, "foo")
-matrix set(0, 1, "foo2")
-matrix set(0, 2, "foo3")
-matrix set(1, 0, "bar")
-matrix set(1, 1, "bar2")
-matrix set(1, 2, "bar3")
-matrix set(2, 0, "baz") 
-matrix set(2, 1, "baz2") 
-matrix set(2, 2, "baz3") 
+matrix := DimList dim(3, 3) 
+matrix set(0, 0, "foo") set(0, 1, "foo2") set(0, 2, "foo3")
+matrix set(1, 0, "bar") set(1, 1, "bar2") set(1, 2, "bar3")
+matrix set(2, 0, "baz") set(2, 1, "baz2") set(2, 2, "baz3") 
+
 matrix println
 "1st set:" .. matrix get(0, 0) println
 "2nd set:" .. matrix get(1, 1) println
@@ -161,14 +152,14 @@ writeln
 # Guess between 1 and 10
 randNum := (Random value(9) + 1) floor
 
-# At this point, i see a standardInput method on File
-input := File standardInput
+input := File clone standardInput
 guess := nil
 prevGuess := nil
 
+# Awesome method on Number
 10 repeat(
     "Guess a number from 1-10: " println
-    guess = input readLine asNumber
+    guess = input readLine("Enter an integer: ") asNumber
     if (guess == randNum,
         break,
 
