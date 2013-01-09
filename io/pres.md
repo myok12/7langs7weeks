@@ -61,7 +61,9 @@ Granted you can't give special precedence to the operator it's still a cool idea
 Question 2 of self-study tells you to override the `/` method of `Number`. `Javascript` has a lot of freedom, but at least you can't override operators! Pretty cool to have the ability though.
 
 ## Simple Singleton
+```io
 List clone := List # Can't clone List anymore >=]
+```
 
 
 ## Go async!
