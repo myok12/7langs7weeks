@@ -151,7 +151,6 @@ writeln
 
 # Guess between 1 and 10
 randNum := (Random value(9) + 1) floor
-
 input := File clone standardInput
 guess := nil
 prevGuess := nil
@@ -174,7 +173,7 @@ prevGuess := nil
 
 if (guess == randNum,
     "You win" println,
-    "You lose" print
+    "You lose" println
 )
 
 writeln
